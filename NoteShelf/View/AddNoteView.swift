@@ -15,16 +15,25 @@ struct AddNoteView: View {
         NavigationView {
             Form {
                 TextField("メモ内容", text: $noteViewModel.content)
+                    .padding()
+                    .background(Color(.systemGray6))
+                    .cornerRadius(10)
                 TextField("タグ（カンマ区切り）", text: $noteViewModel.tags)
+                    .padding()
+                    .background(Color(.systemGray6))
+                    .cornerRadius(10)
                 if let image = noteViewModel.selectedImage {
                     Image(uiImage: image)
                         .resizable()
                         .scaledToFit()
                         .frame(height: 100)
+                        .cornerRadius(10)
+                        .shadow(radius: 5)
                 }
                 Button("画像を選択") {
                     noteViewModel.showImagePicker = true
                 }
+                .foregroundColor(.blue)
             }
             .navigationTitle("メモを追加")
             .navigationBarItems(leading: Button("キャンセル") {

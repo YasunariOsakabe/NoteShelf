@@ -20,13 +20,20 @@ struct AddBookView: View {
             Form {
                 Section(header: Text("本の情報")) {
                     TextField("タイトル", text: $title)
+                        .padding()
+                        .background(Color(.systemGray6))
+                        .cornerRadius(10)
                     TextField("ジャンル", text: $genre)
+                        .padding()
+                        .background(Color(.systemGray6))
+                        .cornerRadius(10)
                 }
 
                 Section(header: Text("メモ")) {
                     ForEach(noteViewModel.notes) { note in
                         VStack(alignment: .leading) {
                             Text(note.content)
+                                .font(.body)
                             ForEach(note.tags, id: \.self) { tag in
                                 Text("#\(tag)")
                                     .font(.caption)
@@ -37,8 +44,13 @@ struct AddBookView: View {
                                     .resizable()
                                     .scaledToFit()
                                     .frame(height: 100)
+                                    .cornerRadius(10)
+                                    .shadow(radius: 5)
                             }
                         }
+                        .padding()
+                        .background(RoundedRectangle(cornerRadius: 10).fill(Color(.systemGray6)))
+                        .padding(.vertical, 5)
                     }
                     .onDelete(perform: noteViewModel.deleteNote)
 
@@ -46,6 +58,8 @@ struct AddBookView: View {
                         showAddNoteView = true
                     }) {
                         Text("メモを追加")
+                            .font(.body)
+                            .foregroundColor(.blue)
                     }
                     .sheet(isPresented: $showAddNoteView) {
                         AddNoteView(noteViewModel: noteViewModel)

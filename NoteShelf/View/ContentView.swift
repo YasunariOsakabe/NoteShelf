@@ -27,8 +27,23 @@ struct ContentView: View {
                 List {
                     ForEach(bookViewModel.filteredBooks) { book in
                         NavigationLink(destination: BookDetailView(book: book, bookViewModel: bookViewModel)) {
-                            Text(book.title)
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text(book.title)
+                                        .font(.headline)
+                                    Text(book.genre)
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
+                                }
+                                Spacer()
+                                Text(book.dateAdded, style: .date)
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding()
+                            .background(RoundedRectangle(cornerRadius: 10).fill(Color(.systemGray6)))
                         }
+                        .padding(.vertical, 5)
                     }
                     .onDelete(perform: bookViewModel.deleteBook)
                 }
@@ -37,19 +52,13 @@ struct ContentView: View {
                     showAddBookView = true
                 }) {
                     Image(systemName: "plus")
+                        .imageScale(.large)
                 })
                 .sheet(isPresented: $showAddBookView) {
                     AddBookView(bookViewModel: bookViewModel)
                 }
             }
+            .background(Color(.systemGray6))
         }
     }
 }
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
-
-
